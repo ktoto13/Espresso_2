@@ -37,18 +37,7 @@ public class IdlingResourcesTest {
     public ActivityTestRule<MainActivity> activityTestRule =
             new ActivityTestRule<>(MainActivity.class);
 
-    @Before
-    public void registeredIdlingResources() {
-        IdlingRegistry.getInstance().register(EspressoIdlingResources.idlingResource);
-    }
-
-    @After
-    public void unregisteredIdlingResources() {
-        IdlingRegistry.getInstance().unregister(EspressoIdlingResources.idlingResource);
-    }
-
-
-    @Test
+   @Test
     public void idlingResourcesTest() {
         ViewInteraction appCompatImageButton = onView(
                 allOf(withContentDescription("Open navigation drawer"),
@@ -66,6 +55,16 @@ public class IdlingResourcesTest {
 
         ViewInteraction textView = onView(allOf(withId(R.id.item_number), withText("7")));
         textView.check(matches(withText("7")));
+    }
+
+    @Before //регистрируем счетчик
+    public void registeredIdlingResources() {
+        IdlingRegistry.getInstance().register(EspressoIdlingResources.idlingResource);
+    }
+
+    @After // отключаем
+    public void unregisteredIdlingResources() {
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResources.idlingResource);
     }
 
     private static Matcher<View> childAtPosition(
