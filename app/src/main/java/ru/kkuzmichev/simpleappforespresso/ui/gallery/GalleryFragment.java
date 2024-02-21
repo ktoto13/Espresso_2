@@ -1,5 +1,9 @@
 package ru.kkuzmichev.simpleappforespresso.ui.gallery;
 
+import static android.app.PendingIntent.getActivity;
+
+import static java.security.AccessController.getContext;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -17,8 +21,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-import ru.kkuzmichev.simpleappforespresso.R;
-import ru.kkuzmichev.simpleappforespresso.databinding.FragmentGalleryBinding;
+import ru.kkuzmichev.simpleappforespresso.EspressoIdlingResources;
+
 
 public class GalleryFragment extends Fragment {
 
@@ -59,6 +63,7 @@ public class GalleryFragment extends Fragment {
 
 
     private void fakeLoadData() {
+        EspressoIdlingResources.increment();
         progressBar.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.INVISIBLE);
         Handler handler = new Handler();
@@ -68,6 +73,7 @@ public class GalleryFragment extends Fragment {
                 {
                     progressBar.setVisibility(View.INVISIBLE);
                     recyclerView.setVisibility(View.VISIBLE);
+                    EspressoIdlingResources.decrement();
                 }
             }
         }, 1500);
